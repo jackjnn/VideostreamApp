@@ -19,6 +19,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 
@@ -28,12 +30,22 @@ import com.google.android.exoplayer2.ui.PlayerView;
 public class PlayerActivity extends AppCompatActivity {
 
   private PlayerView playerView;
+  private SimpleExoPlayer player;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_player);
     playerView = findViewById(R.id.video_view);
+  }
+
+
+
+  private void initializePlayer(){
+    player = new SimpleExoPlayer.Builder(this).build();
+    playerView.setPlayer(player);
+    MediaItem mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3));
+    player.setMediaItem(mediaItem);
   }
 
 }
