@@ -15,9 +15,11 @@
  */
 package com.example.exoplayer;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 
 /**
@@ -25,10 +27,13 @@ import android.os.Bundle;
  */
 public class PlayerActivity extends AppCompatActivity {
 
+  private PlayerView playerView;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_player);
+    playerView = findViewById(R.id.video_view);
   }
 
 }
