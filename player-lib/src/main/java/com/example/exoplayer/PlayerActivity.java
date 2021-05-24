@@ -23,7 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
 
 
@@ -89,13 +91,25 @@ public class PlayerActivity extends AppCompatActivity {
   }
 
   private void initializePlayer(){
-    player = new SimpleExoPlayer.Builder(this).build();
-    playerView.setPlayer(player);
-    MediaItem mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp4));
-    player.setMediaItem(mediaItem);
 
-    MediaItem secondMediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3));
-    player.addMediaItem(secondMediaItem);
+    if (player == null) {
+      DefaultTrackSelector trackSelector = new DefaultTrackSelector(this);
+      trackSelector.setParameters(
+              trackSelector.buildUponParameters().setMaxVideoSizeSd());
+      player = new SimpleExoPlayer.Builder(this)
+              .setTrackSelector(trackSelector)
+              .build();
+    }
+
+    //player = new SimpleExoPlayer.Builder(this).build();
+    playerView.setPlayer(player);
+
+    MediaItem mediaItem = new MediaItem.Builder()
+            .setUri(getString(R.string.media_url_dash))
+            .setMimeType(MimeTypes.APPLICATION_MPD)
+            .build();
+
+    player.setMediaItem(mediaItem);
 
     player.setPlayWhenReady(playWhenReady);
     player.seekTo(currentWindow, playbackPosition);
