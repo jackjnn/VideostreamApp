@@ -91,8 +91,12 @@ public class PlayerActivity extends AppCompatActivity {
   private void initializePlayer(){
     player = new SimpleExoPlayer.Builder(this).build();
     playerView.setPlayer(player);
-    MediaItem mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3));
+    MediaItem mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp4));
     player.setMediaItem(mediaItem);
+
+    MediaItem secondMediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3));
+    player.addMediaItem(secondMediaItem);
+
     player.setPlayWhenReady(playWhenReady);
     player.seekTo(currentWindow, playbackPosition);
     player.prepare();
